@@ -35,7 +35,9 @@ app.get("/getProducts", async (req, res) => {
     res.send(err.message);
   }
 });
-
+app.get("/", (req, res) => {
+  res.send("This is Sahithi");
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port "+process.env.PORT);
