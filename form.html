@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Form</h2>
+
+<input type="text" id="name" placeholder="Product Name"><br><br>
+<input type="number" id="price" placeholder="Price"><br><br>
+<input type="text" id="description" placeholder="Description"><br><br>
+<input type="text" id="image" placeholder="Image URL"><br><br>
+
+<button onclick="addProduct()">Add Product</button>
+
+<hr>
+
+<h2>Products</h2>
+<div id="products"></div>
+
+<script>
+
+function addProduct() {
+
+  const product = {
+    name: document.getElementById("name").value,
+    price: document.getElementById("price").value,
+    description: document.getElementById("description").value,
+    image: document.getElementById("image").value
+  };
+
+  
+  fetch("http://localhost:3000/addProduct", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(product)
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert(data);
+
+   
+    displayProduct(product);
+
+  
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("image").value = "";
+  });
+}
+
+
+
+function displayProduct(product) {
+
+  const container = document.getElementById("products");
+
+  const div = document.createElement("div");
+
+  div.innerHTML = `
+    <h3>${product.name}</h3>
+    <p>Price: ${product.price}</p>
+    <p>${product.description}</p>
+    <img src="${product.image}" width="150"><hr>
+  `;
+
+  container.appendChild(div);
+}
+
+</script>
+
+</body>
+</html>
